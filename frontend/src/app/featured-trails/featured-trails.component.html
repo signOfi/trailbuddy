@@ -1,0 +1,16 @@
+<div class="featured-trails">
+  <h2>Upcoming TrailBuddy Trips</h2>
+  <div class="trail-profiles">
+    <div *ngFor="let profile of trailProfiles" class="profile-card">
+      <img [src]="profile.trailImage" [alt]="profile.trailImage" class="trail-image">
+      <div class="profile-info">
+        <img [src]="profile.profileImage" [alt]="profile.name" class="profile-image">
+        <h3>{{ profile.name }}</h3>
+        <p><strong>Trail:</strong> {{ profile.trailName }}</p>
+        <p><strong>Date:</strong> {{ profile.date }}</p>
+        <p>{{ profile.description }}</p>
+        <a href="#" class="btn">Join Trip</a>
+      </div>
+    </div>
+  </div>
+</div>

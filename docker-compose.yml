@@ -1,0 +1,47 @@
+services:
+  postgres:
+    container_name: postgres-sql-trailbuddy
+    image: postgres:13
+    environment:
+      POSTGRES_USER: ${DB_USER:-trailbuddyuser}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-strongpassword}
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_DB: ${DB_NAME:-trailbuddy_db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: trailbuddy-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5433/${DB_NAME:-trailbuddy_db}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER:-trailbuddyuser}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-strongpassword}
+      ACTIVE_PROFILE: ${PROFILE:-dev}
+    networks:
+      - app-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
