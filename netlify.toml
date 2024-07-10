@@ -2,10 +2,9 @@
 base = "."
 command = """
     cd frontend &&
-    ls -la src/environments || echo "Directory does not exist" &&
     mkdir -p src/environments &&
     echo "$ENVIRONMENT_PROD" > src/environments/environment.prod.ts &&
-    ls -la src/environments &&
+    echo "$ENVIRONMENT_DEV" > src/environments/environment.ts &&
     npm install &&
     npm run build
   """
