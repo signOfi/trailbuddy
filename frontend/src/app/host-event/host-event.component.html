@@ -29,7 +29,7 @@
         <label for="location">
           <i class="fas fa-map-marker-alt"></i> Location
         </label>
-        <input type="text" id="location" name="location" [(ngModel)]="event.location" required placeholder="Enter event location">
+        <input type="text" id="location" name="location" [(ngModel)]="event.location" required placeholder="Enter event location" #addressInput>
       </div>
 
       <div class="form-group">

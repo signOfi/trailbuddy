@@ -1,8 +1,8 @@
 import { environment } from '../../environments/environment';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import {NavbarComponent} from "../navbar/navbar.component";
+import { NavbarComponent } from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-create-event',
@@ -11,8 +11,8 @@ import {NavbarComponent} from "../navbar/navbar.component";
   templateUrl: './host-event.component.html',
   styleUrls: ['./host-event.component.css']
 })
-export class HostEventComponent implements OnInit {
-  @ViewChild('addressInput', { static: true }) addressInput!: ElementRef;
+export class HostEventComponent implements AfterViewInit {
+  @ViewChild('addressInput') addressInput!: ElementRef;
 
   event = {
     title: '',
@@ -22,7 +22,7 @@ export class HostEventComponent implements OnInit {
     description: ''
   };
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.loadGoogleMapsAPI().then(() => {
       this.setupAddressAutocomplete();
     });
@@ -30,7 +30,7 @@ export class HostEventComponent implements OnInit {
 
   loadGoogleMapsAPI(): Promise<void> {
     return new Promise((resolve, reject) => {
-      if (typeof google !== 'undefined') {
+      if (typeof google !== 'undefined' && google.maps) {
         resolve();
         return;
       }
@@ -45,16 +45,21 @@ export class HostEventComponent implements OnInit {
   }
 
   setupAddressAutocomplete() {
-    const autocomplete = new google.maps.places.Autocomplete(this.addressInput.nativeElement);
-    autocomplete.addListener('place_changed', () => {
-      const place = autocomplete.getPlace();
-      if (place.formatted_address) {
-        this.event.location = place.formatted_address;
-      }
-    });
+    if (this.addressInput && google && google.maps && google.maps.places) {
+      const autocomplete = new google.maps.places.Autocomplete(this.addressInput.nativeElement);
+      autocomplete.addListener('place_changed', () => {
+        const place = autocomplete.getPlace();
+        if (place.formatted_address) {
+          this.event.location = place.formatted_address;
+        }
+      });
+    } else {
+      console.error('Google Maps API not loaded or address input not found');
+    }
   }
 
   onSubmit() {
     console.log('Event submitted:', this.event);
+    // Add your submission logic here
   }
 }
