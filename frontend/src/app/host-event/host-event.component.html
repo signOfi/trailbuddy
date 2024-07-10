@@ -1,0 +1,45 @@
+<app-navbar></app-navbar>
+<div class="background-container">
+  <div class="event-container">
+    <h2>Create a Trail Event</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="title">
+          <i class="fas fa-hiking"></i> Event Title
+        </label>
+        <input type="text" id="title" name="title" [(ngModel)]="event.title" required placeholder="Enter event title">
+      </div>
+
+      <div class="form-row">
+        <div class="form-group half-width">
+          <label for="date">
+            <i class="far fa-calendar"></i> Date
+          </label>
+          <input type="date" id="date" name="date" [(ngModel)]="event.date" required>
+        </div>
+        <div class="form-group half-width">
+          <label for="time">
+            <i class="far fa-clock"></i> Time
+          </label>
+          <input type="time" id="time" name="time" [(ngModel)]="event.time" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="location">
+          <i class="fas fa-map-marker-alt"></i> Location
+        </label>
+        <input type="text" id="location" name="location" [(ngModel)]="event.location" required placeholder="Enter event location">
+      </div>
+
+      <div class="form-group">
+        <label for="description">
+          <i class="fas fa-info-circle"></i> Description
+        </label>
+        <textarea id="description" name="description" [(ngModel)]="event.description" required placeholder="Describe your event"></textarea>
+      </div>
+
+      <button type="submit" class="btn-primary">Create Event</button>
+    </form>
+  </div>
+</div>

@@ -2,15 +2,16 @@ import { environment } from '../../environments/environment';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import {NavbarComponent} from "../navbar/navbar.component";
 
 @Component({
   selector: 'app-create-event',
   standalone: true,
-  imports: [FormsModule, CommonModule],
-  templateUrl: './create-event.component.html',
-  styleUrls: ['./create-event.component.css']
+  imports: [FormsModule, CommonModule, NavbarComponent],
+  templateUrl: './host-event.component.html',
+  styleUrls: ['./host-event.component.css']
 })
-export class CreateEventComponent implements OnInit {
+export class HostEventComponent implements OnInit {
   @ViewChild('addressInput', { static: true }) addressInput!: ElementRef;
 
   event = {

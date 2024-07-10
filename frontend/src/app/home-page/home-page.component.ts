@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { HeroSectionComponent } from '../hero-section/hero-section.component';
 import { FeaturedTrailsComponent } from '../featured-trails/featured-trails.component';
-import { CreateEventComponent } from '../create-event/create-event.component';
+import { HostEventComponent } from '../host-event/host-event.component';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
     NavbarComponent,
     HeroSectionComponent,
     FeaturedTrailsComponent,
-    CreateEventComponent
+    HostEventComponent
   ],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css']
