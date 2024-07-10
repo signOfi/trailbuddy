@@ -11,8 +11,7 @@
   right: 0;
   z-index: 1000;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-
-  padding: 0.5rem 2rem; /*  Was a 1 REM  */
+  padding: 0.5rem 2rem;
 }
 
 .navbar-brand {
@@ -34,15 +33,32 @@
   background-color: #ddd;
 }
 
+.navbar-menu {
+  display: flex;
+  gap: 1rem;
+}
 
+.create-event-button,
 .login-button {
-  background-color: #4CAF50;
-  color: white;
   padding: 0.3rem 0.8rem;
   border-radius: 4px;
   text-decoration: none;
   transition: background-color 0.3s;
   font-size: 0.9rem;
+}
+
+.create-event-button {
+  background-color: #FFA500;
+  color: white;
+}
+
+.create-event-button:hover {
+  background-color: #FF8C00;
+}
+
+.login-button {
+  background-color: #4CAF50;
+  color: white;
 }
 
 .login-button:hover {
@@ -58,6 +74,7 @@
     font-size: 1rem;
   }
 
+  .create-event-button,
   .login-button {
     padding: 0.2rem 0.5rem;
     font-size: 0.8rem;

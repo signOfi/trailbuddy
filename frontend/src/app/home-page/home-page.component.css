@@ -1,5 +1,26 @@
-.container {
+.tabs-container {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+.tabs {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid #ccc;
+}
+
+.tabs li {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.tabs li.active {
+  border-bottom: 2px solid #4CAF50;
+}
+
+.tab-content {
+  padding: 20px 0;
 }
