@@ -10,33 +10,57 @@
 }
 
 .auth-container {
+  position: relative;
   max-width: 400px;
   width: 100%;
   padding: 30px;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.85);
   border-radius: 16px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
+.auth-container::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 60px;
+  height: 60px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 
 h2 {
   text-align: center;
-  color: #4CAF50;
-  font-size: 28px; /* Larger font size */
-  margin-bottom: 24px; /* More space below the heading */
+  color: #2e7d32;
+  font-size: 32px;
+  margin-bottom: 24px;
+  font-family: 'Your Nature-Inspired Font', sans-serif;
 }
 
 .form-group {
-  margin-bottom: 20px; /* More space between form groups */
+  margin-bottom: 20px;
 }
 
 input {
   width: 100%;
-  padding: 12px; /* Larger input fields */
+  padding: 12px 12px 12px 40px;
   border: 1px solid #dddfe2;
-  border-radius: 8px;
+  border-radius: 20px;
   font-size: 16px;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  background-size: 20px;
+}
+
+input[type="text"] {
+  background-image: url('/assets/user-icon.png');
+}
+
+input[type="password"] {
+  background-image: url('/assets/lock-icon.png');
 }
 
 input:focus {
@@ -55,6 +79,9 @@ input:focus {
   cursor: pointer;
   transition: background-color 0.3s, transform 0.1s;
   margin-bottom: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-primary:hover, .btn-github:hover, .btn-google:hover {
@@ -67,11 +94,6 @@ input:focus {
 
 .social-login {
   margin-top: 24px;
-}
-
-.btn-github::before, .btn-google::before {
-  font-family: "Font Awesome 5 Brands";
-  margin-right: 8px;
 }
 
 .btn-primary {
@@ -105,13 +127,19 @@ input:focus {
 a {
   color: #4CAF50;
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 a:hover {
+  color: #45a049;
   text-decoration: underline;
 }
 
-
+.error {
+  color: #f44336;
+  text-align: center;
+  margin-top: 10px;
+}
 
 /* Responsive adjustments */
 @media (max-width: 480px) {
@@ -120,6 +148,10 @@ a:hover {
   }
 
   h2 {
-    font-size: 24px;
+    font-size: 28px;
+  }
+
+  input, .btn-primary, .btn-github, .btn-google {
+    font-size: 14px;
   }
 }
