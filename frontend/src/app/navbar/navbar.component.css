@@ -2,14 +2,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 1rem;
-  background-color: #4CAF50;
-  color: white;
-  position: fixed;
+  background-color: white;
+  color: #4CAF50;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+  padding: 0.5rem 2rem; /*  Was a 1 REM  */
 }
 
 .navbar-brand {
@@ -17,19 +19,33 @@
   font-weight: bold;
 }
 
+.navbar-brand a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.icon-placeholder {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  background-color: #ddd;
+}
+
+
 .login-button {
-  background-color: white;
-  color: #4CAF50;
+  background-color: #4CAF50;
+  color: white;
   padding: 0.3rem 0.8rem;
   border-radius: 4px;
   text-decoration: none;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.3s;
   font-size: 0.9rem;
 }
 
 .login-button:hover {
   background-color: #45a049;
-  color: white;
 }
 
 @media (max-width: 768px) {

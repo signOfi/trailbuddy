@@ -1,20 +1,31 @@
-<div class="auth-container">
-  <h2>Register</h2>
-  <form (ngSubmit)="onSubmit()">
-    <div class="form-group">
-      <label for="username">Username:</label>
-      <input type="text" id="username" [(ngModel)]="username" name="username" required>
+<app-navbar></app-navbar>
+<div class="background-container">
+  <div class="auth-container">
+    <h2>Register</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" [(ngModel)]="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" [(ngModel)]="password" name="password" required>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password:</label>
+        <input type="password" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+      </div>
+      <button type="submit" class="btn-primary">Register</button>
+    </form>
+    <div class="social-login">
+      <button class="btn-github">
+        <i class="fab fa-github"></i> Register with GitHub
+      </button>
+      <button class="btn-google">
+        <i class="fab fa-google"></i> Register with Google
+      </button>
     </div>
-    <div class="form-group">
-      <label for="password">Password:</label>
-      <input type="password" id="password" [(ngModel)]="password" name="password" required>
-    </div>
-    <div class="form-group">
-      <label for="confirmPassword">Confirm Password:</label>
-      <input type="password" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" required>
-    </div>
-    <button type="submit" class="btn-primary">Register</button>
-  </form>
-  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
-  <p>Already have an account? <a routerLink="/login">Login</a></p>
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+    <p>Already have an account? <a routerLink="/login">Login</a></p>
+  </div>
 </div>

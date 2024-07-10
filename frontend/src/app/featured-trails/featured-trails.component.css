@@ -12,7 +12,7 @@ h2 {
   text-align: center;
   color: #333;
   margin-bottom: 3rem;
-  font-size: 2.5rem;
+  font-size: 2.8rem;
 }
 
 .trail-profiles {
@@ -75,11 +75,13 @@ p {
   color: white;
   text-decoration: none;
   border-radius: 4px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transfrom 0.2s;
+  cursor: pointer;
 }
 
 .btn:hover {
   background-color: #45a049;
+  transform: translateY(-2px);
 }
 
 @media (max-width: 768px) {

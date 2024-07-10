@@ -8,4 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './hero-section.component.css'
 })
 export class HeroSectionComponent {
+  scrollToTrips() {
+    const tripsElement = document.querySelector('.featured-trails');
+    if (tripsElement) {
+      tripsElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 }
