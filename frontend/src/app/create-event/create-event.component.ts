@@ -1,5 +1,4 @@
-declare var google: any;
-
+import { environment } from '../../environments/environment';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -12,7 +11,6 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./create-event.component.css']
 })
 export class CreateEventComponent implements OnInit {
-  @ViewChild('mapContainer', { static: true }) mapContainer!: ElementRef;
   @ViewChild('addressInput', { static: true }) addressInput!: ElementRef;
 
   event = {
@@ -23,41 +21,39 @@ export class CreateEventComponent implements OnInit {
     description: ''
   };
 
-  map: any;
-  geocoder: any;
-
   ngOnInit() {
-    this.initMap();
-    this.setupAddressAutocomplete();
+    this.loadGoogleMapsAPI().then(() => {
+      this.setupAddressAutocomplete();
+    });
   }
 
-  initMap() {
-    this.map = new google.maps.Map(this.mapContainer.nativeElement, {
-      center: { lat: 0, lng: 0 },
-      zoom: 8
+  loadGoogleMapsAPI(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (typeof google !== 'undefined') {
+        resolve();
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&libraries=places`;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => resolve();
+      script.onerror = reject;
+      document.head.appendChild(script);
     });
-    this.geocoder = new google.maps.Geocoder();
   }
 
   setupAddressAutocomplete() {
     const autocomplete = new google.maps.places.Autocomplete(this.addressInput.nativeElement);
     autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace();
-      if (place.geometry) {
-        this.map.setCenter(place.geometry.location);
-        this.map.setZoom(15);
-        new google.maps.Marker({
-          map: this.map,
-          position: place.geometry.location,
-          title: place.name
-        });
-        this.event.location = place.formatted_address || '';
+      if (place.formatted_address) {
+        this.event.location = place.formatted_address;
       }
     });
   }
 
   onSubmit() {
     console.log('Event submitted:', this.event);
-    // Here you would typically send the data to your backend
   }
 }
