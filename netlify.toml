@@ -3,8 +3,8 @@ base = "."
 command = """
     cd frontend &&
     mkdir -p src/environments &&
-    echo "$ENVIRONMENT_PROD" > src/environments/environment.prod.ts &&
-    echo "$ENVIRONMENT_DEV" > src/environments/environment.ts &&
+    echo "$ENVIRONMENT_PROD" | sed 's/\\n/\\n/g' > src/environments/environment.prod.ts &&
+    echo "$ENVIRONMENT_DEV" | sed 's/\\n/\\n/g' > src/environments/environment.ts &&
     npm install &&
     npm run build
   """
