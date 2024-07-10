@@ -1,11 +1,12 @@
 [build]
 base = "."
 command = """
-  cd frontend &&
-  echo "$ENVIRONMENT_PROD" > src/environments/environment.prod.ts &&
-  npm install &&
-  npm run build
-"""
+    cd frontend &&
+    mkdir -p src/environments &&
+    echo "$ENVIRONMENT_PROD" > src/environments/environment.prod.ts &&
+    npm install &&
+    npm run build
+  """
 publish = "frontend/dist/frontend/browser"
 
 [[redirects]]
