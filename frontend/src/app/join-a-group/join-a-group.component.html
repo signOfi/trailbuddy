@@ -1,4 +1,3 @@
-<app-navbar></app-navbar>
 <div class="join-a-group">
   <div class="header-container">
     <div class="title-container">
@@ -12,7 +11,7 @@
   </div>
 
   <div class="group-profiles">
-    <div *ngFor="let group of groupProfiles" class="group-card">
+    <div *ngFor="let group of displayedProfiles" class="group-card">
       <div class="card-header" [style.background-image]="'url(' + group.trailImage + ')'">
         <div class="overlay"></div>
         <div class="difficulty-badge" [class]="group.difficulty.toLowerCase()">

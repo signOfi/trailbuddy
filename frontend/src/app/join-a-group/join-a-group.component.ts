@@ -1,6 +1,7 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../navbar/navbar.component";
+import { Router, NavigationEnd } from '@angular/router';
 
 declare var google: any;
 
@@ -138,11 +139,26 @@ export class JoinAGroupComponent implements OnInit {
     }
   ];
 
+  displayedProfiles: any[];
   autocomplete: any;
 
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone, private router: Router) {
+    this.displayedProfiles = this.groupProfiles;
+
+    // Subscribe to router events to reinitialize the component on navigation
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.initializeComponent();
+      }
+    });
+  }
 
   ngOnInit() {
+    this.initializeComponent();
+  }
+
+  initializeComponent() {
+    this.displayedProfiles = [...this.groupProfiles];
     this.loadImages();
     this.initAutocomplete();
   }
@@ -159,13 +175,15 @@ export class JoinAGroupComponent implements OnInit {
   initAutocomplete() {
     this.ngZone.runOutsideAngular(() => {
       const input = document.getElementById('location-search') as HTMLInputElement;
-      this.autocomplete = new google.maps.places.Autocomplete(input, {
-        types: ['geocode']
-      });
+      if (input && !this.autocomplete) {
+        this.autocomplete = new google.maps.places.Autocomplete(input, {
+          types: ['geocode']
+        });
 
-      this.autocomplete.addListener('place_changed', () => {
-        this.ngZone.run(() => this.handlePlaceSelection());
-      });
+        this.autocomplete.addListener('place_changed', () => {
+          this.ngZone.run(() => this.handlePlaceSelection());
+        });
+      }
     });
   }
 
@@ -173,6 +191,7 @@ export class JoinAGroupComponent implements OnInit {
     const place = this.autocomplete.getPlace();
     if (place.geometry) {
       console.log('Selected place:', place.formatted_address);
+      this.searchLocation();
     }
   }
 
@@ -180,5 +199,8 @@ export class JoinAGroupComponent implements OnInit {
     const input = document.getElementById('location-search') as HTMLInputElement;
     const searchTerm = input.value.toLowerCase();
     console.log('Searching for:', searchTerm);
+
+    // Always display all profiles regardless of the search term
+    this.displayedProfiles = [...this.groupProfiles];
   }
 }

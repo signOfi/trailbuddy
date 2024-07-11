@@ -1,15 +1,13 @@
 <nav class="navbar">
   <div class="navbar-brand">
-    <a routerLink="/">
-      <span class="icon-placeholder">
-        <img src="assets/icon.png" alt="Picture of Icon">
-      </span>
+    <a [routerLink]="'/'">
       TrailBuddy
     </a>
   </div>
   <div class="navbar-menu">
-    <a routerLink="/join-a-group" class="join-group-button">Join a Group</a>
-    <a routerLink="/host-event" class="create-event-button">Host Event</a>
-    <a routerLink="/login" class="login-button">Login</a>
+    <a [routerLink]="'/join-a-group'" class="nav-button join-group-button">Find Group</a>
+    <a [routerLink]="'/host-event'" class="nav-button host-event-button">Create Event</a>
+    <a [routerLink]="'/manage-group'" class="nav-button manage-group-button">Manage Group</a>
+    <a [routerLink]="'/login'" class="nav-button login-button">Sign In</a>
   </div>
 </nav>

@@ -1,17 +1,16 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../navbar/navbar.component";
-import { environment } from '../../environments/environment';
 
 @Component({
-  selector: 'app-create-event',
+  selector: 'app-manage-group-event',
   standalone: true,
   imports: [FormsModule, CommonModule, NavbarComponent],
-  templateUrl: './host-event.component.html',
-  styleUrls: ['./host-event.component.css']
+  templateUrl: './manage-group-event.component.html',
+  styleUrls: ['./manage-group-event.component.css']
 })
-export class HostEventComponent implements AfterViewInit {
+export class ManageGroupEventComponent implements OnInit {
   @ViewChild('addressInput') addressInput!: ElementRef;
 
   event = {
@@ -27,28 +26,30 @@ export class HostEventComponent implements AfterViewInit {
     imageName: ''
   };
 
-  ngAfterViewInit() {
-    this.loadGoogleMapsAPI().then(() => {
-      this.setupAddressAutocomplete();
-    });
+  ngOnInit() {
+    this.loadEventData();
+    // Uncomment the following line when ready to use Google Maps
+    // this.setupAddressAutocomplete();
   }
 
-  loadGoogleMapsAPI(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      if (typeof google !== 'undefined' && google.maps) {
-        resolve();
-        return;
-      }
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${environment.googleMapsApiKey}&libraries=places`;
-      script.async = true;
-      script.defer = true;
-      script.onload = () => resolve();
-      script.onerror = reject;
-      document.head.appendChild(script);
-    });
+  loadEventData() {
+    // TODO: Implement logic to load existing event data
+    this.event = {
+      title: 'Sample Event',
+      date: '2024-07-15',
+      time: '10:00',
+      location: 'Sample Location',
+      description: 'This is a sample event description.',
+      difficulty: 'moderate',
+      leaderName: 'John Doe',
+      spots: 10,
+      image: null,
+      imageName: ''
+    };
   }
 
+  // Uncomment and implement this method when ready to use Google Maps
+  /*
   setupAddressAutocomplete() {
     if (this.addressInput && google && google.maps && google.maps.places) {
       const autocomplete = new google.maps.places.Autocomplete(this.addressInput.nativeElement);
@@ -62,6 +63,7 @@ export class HostEventComponent implements AfterViewInit {
       console.error('Google Maps API not loaded or address input not found');
     }
   }
+  */
 
   onDragOver(event: DragEvent) {
     event.preventDefault();
@@ -105,7 +107,7 @@ export class HostEventComponent implements AfterViewInit {
   }
 
   onSubmit() {
-    console.log('Event submitted:', this.event);
-    // Add your submission logic here, including handling the image file
+    console.log('Event changes submitted:', this.event);
+    // TODO: Implement logic to save changes
   }
 }
