@@ -65,6 +65,25 @@
   background-color: #45a049;
 }
 
+.join-group-button,
+.create-event-button,
+.login-button {
+  padding: 0.3rem 0.8rem;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.3s;
+  font-size: 0.9rem;
+}
+
+.join-group-button {
+  background-color: #3498db;
+  color: white;
+}
+
+.join-group-button:hover {
+  background-color: #2980b9;
+}
+
 @media (max-width: 768px) {
   .navbar {
     padding: 0.3rem 0.5rem;
@@ -79,4 +98,12 @@
     padding: 0.2rem 0.5rem;
     font-size: 0.8rem;
   }
+
+  .join-group-button,
+  .create-event-button,
+  .login-button {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+  }
+
 }

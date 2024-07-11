@@ -1,0 +1,38 @@
+<app-navbar></app-navbar>
+<div class="join-a-group">
+  <div class="header-container">
+    <div class="title-container">
+      <h1>Discover Your Next Adventure</h1>
+      <p class="subtitle">Join a TrailBuddy group and explore the great outdoors together!</p>
+    </div>
+    <div class="search-container">
+      <input type="text" id="location-search" placeholder="Enter a location or zip code">
+      <button (click)="searchLocation()" class="search-button">Search</button>
+    </div>
+  </div>
+
+  <div class="group-profiles">
+    <div *ngFor="let group of groupProfiles" class="group-card">
+      <div class="card-header" [style.background-image]="'url(' + group.trailImage + ')'">
+        <div class="overlay"></div>
+        <div class="difficulty-badge" [class]="group.difficulty.toLowerCase()">
+          {{ group.difficulty }}
+        </div>
+        <h3>{{ group.trailName }}</h3>
+      </div>
+      <div class="card-content">
+        <img [src]="group.organizerImage" [alt]="group.organizer" class="organizer-image">
+        <p class="organizer">Led by {{ group.organizer }}</p>
+        <div class="info-row">
+          <span><i class="fas fa-calendar-alt"></i> {{ group.date }}</span>
+          <span><i class="fas fa-users"></i> {{ group.spotsLeft }} spots left</span>
+        </div>
+        <div class="info-row">
+          <span><i class="fas fa-map-marker-alt"></i> {{ group.address }}, {{ group.zipCode }}</span>
+        </div>
+        <p class="trail-info">{{ group.trailInfo }}</p>
+        <button class="btn join-adventure">Join Adventure</button>
+      </div>
+    </div>
+  </div>
+</div>
