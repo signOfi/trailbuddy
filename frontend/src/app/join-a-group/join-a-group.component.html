@@ -5,8 +5,8 @@
       <p class="subtitle">Join a TrailBuddy group and explore the great outdoors together!</p>
     </div>
     <div class="search-container">
-      <input type="text" id="location-search" placeholder="Enter a location or zip code">
-      <button (click)="searchLocation()" class="search-button">Search</button>
+      <input type="text" id="location-search" placeholder="Enter a location or zip code" (keyup.enter)="searchLocation()">
+      <button class="search-button" (click)="searchLocation()">Search</button>
     </div>
   </div>
 

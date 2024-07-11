@@ -79,14 +79,40 @@
 }
 
 .manage-group-button {
-  background-color: #d9bec1;
-  color: #e72133;
+  background-color: #d9d6d6;
+  color: #6e6c6c;
 }
 
 .manage-group-button:hover {
-  background-color: #e72133;
+  background-color: #6e6c6c;
   color: white;
 }
+
+.nav-button.active {
+  background-color: #333333;
+  color: white;
+}
+
+.join-group-button.active {
+  background-color: #3498db;
+  color: white;
+}
+
+.host-event-button.active {
+  background-color: #FFA500;
+  color: white;
+}
+
+.manage-group-button.active {
+  background-color: #6e6c6c;
+  color: white;
+}
+
+.login-button.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
 
 @media (max-width: 768px) {
   .navbar {

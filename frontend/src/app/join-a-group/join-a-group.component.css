@@ -211,8 +211,39 @@ h1 {
   }
 
   .search-container {
+    display: flex;
+    align-items: center;
+    max-width: 400px;
     width: 100%;
-    justify-content: center;
+  }
+
+  #location-search {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+  }
+
+  .search-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+  }
+
+  .search-button:hover {
+    background-color: #45a049;
+  }
+
+  @media (max-width: 768px) {
+    .search-container {
+      max-width: 100%;
+    }
   }
 }
 

@@ -1,13 +1,13 @@
 <nav class="navbar">
   <div class="navbar-brand">
-    <a [routerLink]="'/'">
+    <a [routerLink]="'/'" [ngClass]="{'active': isActive('/')}">
       TrailBuddy
     </a>
   </div>
   <div class="navbar-menu">
-    <a [routerLink]="'/join-a-group'" class="nav-button join-group-button">Find Group</a>
-    <a [routerLink]="'/host-event'" class="nav-button host-event-button">Create Event</a>
-    <a [routerLink]="'/manage-group'" class="nav-button manage-group-button">Manage Group</a>
-    <a [routerLink]="'/login'" class="nav-button login-button">Sign In</a>
+    <a [routerLink]="'/join-a-group'" class="nav-button join-group-button" [ngClass]="{'active': isActive('/join-a-group')}">Find Group</a>
+    <a [routerLink]="'/host-event'" class="nav-button host-event-button" [ngClass]="{'active': isActive('/host-event')}">Create Event</a>
+    <a [routerLink]="'/manage-group'" class="nav-button manage-group-button" [ngClass]="{'active': isActive('/manage-group')}">Manage Group</a>
+    <a [routerLink]="'/login'" class="nav-button login-button" [ngClass]="{'active': isActive('/login')}">Sign In</a>
   </div>
 </nav>

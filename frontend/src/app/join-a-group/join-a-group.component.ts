@@ -197,10 +197,16 @@ export class JoinAGroupComponent implements OnInit {
 
   searchLocation() {
     const input = document.getElementById('location-search') as HTMLInputElement;
-    const searchTerm = input.value.toLowerCase();
+    const searchTerm = input.value.toLowerCase().trim();
     console.log('Searching for:', searchTerm);
 
-    // Always display all profiles regardless of the search term
-    this.displayedProfiles = [...this.groupProfiles];
+    if (searchTerm) {
+      this.displayedProfiles = this.groupProfiles.filter(profile =>
+        profile.address.toLowerCase().includes(searchTerm) ||
+        profile.zipCode.includes(searchTerm)
+      );
+    } else {
+      this.displayedProfiles = [...this.groupProfiles];
+    }
   }
 }
