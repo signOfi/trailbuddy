@@ -1,89 +1,75 @@
 <div class="background-container">
-  <div class="event-container">
-    <h2>Manage Group Event</h2>
-    <form (ngSubmit)="onSubmit()">
-      <div class="form-group">
-        <label for="title">
-          <i class="fas fa-hiking"></i> Event Title
-        </label>
-        <input type="text" id="title" name="title" [(ngModel)]="event.title" required placeholder="Enter event title">
-      </div>
-
-      <div class="form-row">
-        <div class="form-group half-width">
-          <label for="date">
-            <i class="far fa-calendar"></i> Date
-          </label>
-          <input type="date" id="date" name="date" [(ngModel)]="event.date" required>
+  <div class="content-wrapper">
+    <div class="event-list-panel">
+      <h3>Select an Event</h3>
+      <ul class="event-list">
+        <li (click)="selectEvent(1)" [class.active]="selectedEventId === 1">Sample Event 1</li>
+        <li (click)="selectEvent(2)" [class.active]="selectedEventId === 2">Sample Event 2</li>
+      </ul>
+    </div>
+    <div class="event-container">
+      <h2>Manage Group Event</h2>
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="eventTitle"><i class="fas fa-heading"></i> Event Title</label>
+          <input type="text" id="eventTitle" name="title" [(ngModel)]="event.title" required>
         </div>
-        <div class="form-group half-width">
-          <label for="time">
-            <i class="far fa-clock"></i> Time
-          </label>
-          <input type="time" id="time" name="time" [(ngModel)]="event.time" required>
+
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="eventDate"><i class="far fa-calendar"></i> Date</label>
+            <input type="date" id="eventDate" name="date" [(ngModel)]="event.date" required>
+          </div>
+          <div class="form-group half-width">
+            <label for="eventTime"><i class="far fa-clock"></i> Time</label>
+            <input type="time" id="eventTime" name="time" [(ngModel)]="event.time" required>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label for="location">
-          <i class="fas fa-map-marker-alt"></i> Location
-        </label>
-        <input type="text" id="location" name="location" [(ngModel)]="event.location" required placeholder="Enter event location">
-      </div>
-
-      <div class="form-group">
-        <label for="description">
-          <i class="fas fa-info-circle"></i> Description
-        </label>
-        <textarea id="description" name="description" [(ngModel)]="event.description" required placeholder="Describe your event"></textarea>
-      </div>
-
-      <div class="form-group">
-        <label for="difficulty">
-          <i class="fas fa-mountain"></i> Difficulty
-        </label>
-        <select id="difficulty" name="difficulty" [(ngModel)]="event.difficulty" required>
-          <option value="easy">Easy</option>
-          <option value="moderate">Moderate</option>
-          <option value="challenging">Challenging</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="leaderName">
-          <i class="fas fa-user"></i> Event Leader
-        </label>
-        <input type="text" id="leaderName" name="leaderName" [ngModel]="event.leaderName" readonly>
-      </div>
-
-      <div class="form-group">
-        <label for="spots">
-          <i class="fas fa-users"></i> Available Spots
-        </label>
-        <input type="number" id="spots" name="spots" [(ngModel)]="event.spots" required min="1">
-      </div>
-
-      <div class="form-group">
-        <label for="imageUpload">
-          <i class="fas fa-image"></i> Event Image
-        </label>
-        <div class="drag-drop-area"
-             (dragover)="onDragOver($event)"
-             (dragleave)="onDragLeave($event)"
-             (drop)="onDrop($event)"
-             (click)="fileInput.click()">
-          <p *ngIf="!event.imageName">Drag and drop an image here, or click to select</p>
-          <p *ngIf="event.imageName">{{ event.imageName }}</p>
-          <input type="file"
-                 id="imageUpload"
-                 (change)="onFileSelected($event)"
-                 accept="image/*"
-                 style="display: none;"
-                 #fileInput>
+        <div class="form-group">
+          <label for="eventLocation"><i class="fas fa-map-marker-alt"></i> Location</label>
+          <input type="text" id="eventLocation" name="location" [(ngModel)]="event.location" required>
         </div>
-      </div>
 
-      <button type="submit" class="btn-primary">Save Changes</button>
-    </form>
+        <div class="form-group">
+          <label for="eventDescription"><i class="fas fa-align-left"></i> Description</label>
+          <textarea id="eventDescription" name="description" [(ngModel)]="event.description" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="eventDifficulty"><i class="fas fa-mountain"></i> Difficulty</label>
+          <select id="eventDifficulty" name="difficulty" [(ngModel)]="event.difficulty" required>
+            <option value="easy">Easy</option>
+            <option value="moderate">Moderate</option>
+            <option value="challenging">Challenging</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="eventLeader"><i class="fas fa-user"></i> Event Leader</label>
+          <input type="text" id="eventLeader" name="leaderName" [(ngModel)]="event.leaderName" required>
+        </div>
+
+        <div class="form-group">
+          <label for="eventSpots"><i class="fas fa-users"></i> Available Spots</label>
+          <input type="number" id="eventSpots" name="spots" [(ngModel)]="event.spots" required min="1">
+        </div>
+
+        <div class="form-group">
+          <label><i class="far fa-image"></i> Event Image</label>
+          <div class="drag-drop-area"
+               (dragover)="onDragOver($event)"
+               (dragleave)="onDragLeave($event)"
+               (drop)="onDrop($event)"
+               (click)="fileInput.click()">
+            <p>Drag and drop an image here, or click to select</p>
+            <p *ngIf="event.imageName">{{ event.imageName }}</p>
+          </div>
+          <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none;">
+        </div>
+
+        <button type="submit">Save Changes</button>
+      </form>
+    </div>
   </div>
 </div>

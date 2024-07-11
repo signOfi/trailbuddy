@@ -26,44 +26,49 @@ export class ManageGroupEventComponent implements OnInit {
     imageName: ''
   };
 
+  selectedEventId: number | null = null;
+
   ngOnInit() {
-    this.loadEventData();
-    // Uncomment the following line when ready to use Google Maps
-    // this.setupAddressAutocomplete();
+    // Load the first event by default
+    this.selectEvent(1);
   }
 
-  loadEventData() {
-    // TODO: Implement logic to load existing event data
-    this.event = {
-      title: 'Sample Event',
-      date: '2024-07-15',
-      time: '10:00',
-      location: 'Sample Location',
-      description: 'This is a sample event description.',
-      difficulty: 'moderate',
-      leaderName: 'John Doe',
-      spots: 10,
-      image: null,
-      imageName: ''
-    };
+  selectEvent(eventId: number) {
+    this.selectedEventId = eventId;
+    this.loadEventData(eventId);
   }
 
-  // Uncomment and implement this method when ready to use Google Maps
-  /*
-  setupAddressAutocomplete() {
-    if (this.addressInput && google && google.maps && google.maps.places) {
-      const autocomplete = new google.maps.places.Autocomplete(this.addressInput.nativeElement);
-      autocomplete.addListener('place_changed', () => {
-        const place = autocomplete.getPlace();
-        if (place.formatted_address) {
-          this.event.location = place.formatted_address;
-        }
-      });
-    } else {
-      console.error('Google Maps API not loaded or address input not found');
+  loadEventData(eventId: number) {
+    // TODO: Implement logic to load existing event data based on eventId
+    // For now, we'll use sample data
+    if (eventId === 1) {
+      this.event = {
+        title: 'Sample Event 1',
+        date: '2024-07-15',
+        time: '10:00',
+        location: 'Sample Location 1',
+        description: 'This is a sample event description for Event 1.',
+        difficulty: 'moderate',
+        leaderName: 'John Doe',
+        spots: 10,
+        image: null,
+        imageName: ''
+      };
+    } else if (eventId === 2) {
+      this.event = {
+        title: 'Sample Event 2',
+        date: '2024-08-20',
+        time: '14:00',
+        location: 'Sample Location 2',
+        description: 'This is a sample event description for Event 2.',
+        difficulty: 'challenging',
+        leaderName: 'Jane Smith',
+        spots: 15,
+        image: null,
+        imageName: ''
+      };
     }
   }
-  */
 
   onDragOver(event: DragEvent) {
     event.preventDefault();
