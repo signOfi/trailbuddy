@@ -7,15 +7,11 @@ import com.trail.backend.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 
-@Controller
+@RestController
 public class UserController {
 
     private final UserService userService;
@@ -26,24 +22,23 @@ public class UserController {
 
     @GetMapping("/user")
     public ResponseEntity<UserDTO> getUser(@AuthenticationPrincipal UserDetails userDetails) {
-        String email = userDetails.getUsername();
-        User user = userService.findByEmail(email);
+        String username = userDetails.getUsername();
+        User user = userService.findByUsername(username);
 
         if (user != null) {
             UserDTO userDTO = convertToDto(user);
             return ResponseEntity.ok(userDTO);
-        }
-        else
+        } else
             return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> registeredUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO) {
         try {
             User registeredUser = convertToUser(userDTO);
             return ResponseEntity.ok(registeredUser);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(null);
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
@@ -53,12 +48,11 @@ public class UserController {
             String token = userService.login(loginDTO.getUsername(), loginDTO.getPassword());
             return ResponseEntity.ok().body(Collections.singletonMap("token", token));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Bad username or password.");
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     private User convertToUser(UserDTO userDTO) {
-        /* User has the OPTION to upload profile picture so if nothing we give them a default profile picture */
         String profilePictureUrl = userDTO.getProfilePictureUrl() != null
                 ? userDTO.getProfilePictureUrl() : "defaultProfilePicture.png";
 
@@ -88,5 +82,4 @@ public class UserController {
                 user.getProfilePictureUrl()
         );
     }
-
 }

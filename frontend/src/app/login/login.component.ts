@@ -25,8 +25,9 @@ export class LoginComponent {
       return;
     }
 
-    this.userService.login(this.username, this.password).subscribe(
-      response => {
+    console.log('Attempting login for user:', this.username);
+    this.userService.login(this.username, this.password).subscribe({
+      next: (response) => {
         console.log("Login success", response);
         this.successMessage = "Login successful! Redirecting to home page...";
         this.errorMessage = '';
@@ -34,12 +35,12 @@ export class LoginComponent {
           this.router.navigate(['/']);
         }, 2000);
       },
-      error => {
-        console.log("Login failed", error);
-        this.errorMessage = "Login failed. Please check your credentials";
+      error: (error) => {
+        console.error("Login failed", error);
+        this.errorMessage = error.error || "Login failed. Please check your credentials";
         this.successMessage = '';
       }
-    );
+    });
   }
 
   validateForm(): boolean {

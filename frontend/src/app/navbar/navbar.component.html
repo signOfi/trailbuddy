@@ -9,6 +9,7 @@
     <a [routerLink]="'/my-events'" class="nav-button my-events-button" [ngClass]="{'active': isActive('/my-events')}">My Events</a>
     <a [routerLink]="'/host-event'" class="nav-button host-event-button" [ngClass]="{'active': isActive('/host-event')}">Create Event</a>
     <a [routerLink]="'/manage-group'" class="nav-button manage-group-button" [ngClass]="{'active': isActive('/manage-group')}">Manage Group</a>
-    <a [routerLink]="'/login'" class="nav-button login-button" [ngClass]="{'active': isActive('/login')}">Sign In</a>
+    <a *ngIf="!isLoggedIn" [routerLink]="'/login'" class="nav-button login-button" [ngClass]="{'active': isActive('/login')}">Sign In</a>
+    <a *ngIf="isLoggedIn" (click)="signOut()" class="nav-button login-button">Sign Out</a>
   </div>
 </nav>
