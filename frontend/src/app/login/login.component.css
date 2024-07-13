@@ -55,21 +55,13 @@ input {
   background-size: 20px;
 }
 
-input[type="text"] {
-  background-image: url('/assets/user-icon.png');
-}
-
-input[type="password"] {
-  background-image: url('/assets/lock-icon.png');
-}
-
 input:focus {
   border-color: #4CAF50;
   outline: none;
   box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
 }
 
-.btn-primary, .btn-github, .btn-google {
+.btn-primary{
   width: 100%;
   padding: 12px;
   color: white;
@@ -84,11 +76,11 @@ input:focus {
   align-items: center;
 }
 
-.btn-primary:hover, .btn-github:hover, .btn-google:hover {
+.btn-primary:hover {
   transform: translateY(-2px);
 }
 
-.btn-primary:active, .btn-github:active, .btn-google:active {
+.btn-primary:active {
   transform: translateY(0);
 }
 
@@ -102,26 +94,6 @@ input:focus {
 
 .btn-primary:hover {
   background-color: #45a049;
-}
-
-.btn-github {
-  background-color: #24292e;
-}
-
-.btn-github:hover {
-  background-color: #1c2024;
-}
-
-.btn-google {
-  background-color: #4285F4;
-}
-
-.btn-google:hover {
-  background-color: #3367D6;
-}
-
-.btn-github i, .btn-google i {
-  margin-right: 8px;
 }
 
 a {
@@ -141,7 +113,22 @@ a:hover {
   margin-top: 10px;
 }
 
-/* Responsive adjustments */
+.error-message {
+  color: #ff0000;
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.success-message {
+  color: #4CAF50;
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
 @media (max-width: 480px) {
   .auth-container {
     padding: 20px;

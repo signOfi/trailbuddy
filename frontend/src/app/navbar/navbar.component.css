@@ -113,6 +113,20 @@
   color: white;
 }
 
+.my-events-button {
+  background-color: #f0e6ff;
+  color: #8e44ad;
+}
+
+.my-events-button:hover {
+  background-color: #8e44ad;
+  color: white;
+}
+
+.my-events-button.active {
+  background-color: #8e44ad;
+  color: white;
+}
 
 @media (max-width: 768px) {
   .navbar {

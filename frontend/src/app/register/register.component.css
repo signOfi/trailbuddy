@@ -121,6 +121,15 @@ a:hover {
   font-size: 14px;
 }
 
+
+.error-message {
+  color: #ff0000;
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
 .auth-container::-webkit-scrollbar {
   width: 10px;
 }
@@ -137,6 +146,50 @@ a:hover {
 
 .auth-container::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+.drag-drop-area {
+  border: 2px dashed #4CAF50;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+}
+
+.drag-drop-area:hover {
+  background-color: #f0f0f0;
+}
+
+.drag-drop-area i {
+  font-size: 48px;
+  color: #4CAF50;
+  margin-bottom: 10px;
+}
+
+.drag-drop-area p {
+  margin: 0;
+  color: #666;
+}
+
+.drag-drop-area .file-name {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #4CAF50;
+}
+
+.drag-drop-area.dragover {
+  background-color: #e8f5e9;
+  border-color: #2e7d32;
+}
+
+.success-message {
+  color: #4CAF50;
+  text-align: center;
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 @media (max-width: 600px) {

@@ -86,11 +86,6 @@ button:hover {
   background-color: #45a049;
 }
 
-.form-group label i {
-  margin-right: 5px;
-  color: #3498db;
-}
-
 select {
   appearance: none;
   -webkit-appearance: none;
@@ -109,43 +104,44 @@ select:focus {
 }
 
 .drag-drop-area {
-  border: 2px dashed #bdc3c7;
-  border-radius: 4px;
+  border: 2px dashed #4CAF50;
+  border-radius: 8px;
   padding: 20px;
   text-align: center;
   cursor: pointer;
-  transition: background-color 0.3s;
-  margin-top: 15px;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
 }
 
 .drag-drop-area:hover, .drag-drop-area.dragging {
-  background-color: #ecf0f1;
+  background-color: #e8f5e9;
+}
+
+.drag-drop-area i {
+  font-size: 48px;
+  color: #4CAF50;
+  margin-bottom: 10px;
 }
 
 .drag-drop-area p {
   margin: 0;
-  color: #7f8c8d;
+  color: #666;
   font-size: 16px;
 }
 
-input[readonly] {
-  background-color: #f2f2f2;
-  cursor: not-allowed;
+.drag-drop-area .file-name {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #4CAF50;
 }
 
 @media (max-width: 768px) {
-  .background-container {
-    padding: 10px;
-  }
-
   .event-container {
     padding: 20px;
-    max-width: 100%;
   }
 
   h2 {
     font-size: 20px;
-    margin-bottom: 15px;
   }
 
   .form-group {
@@ -179,57 +175,8 @@ input[readonly] {
     width: 100%;
   }
 
-  .drag-drop-area {
-    padding: 15px;
-  }
-
-  .drag-drop-area p {
-    font-size: 14px;
-  }
-
   button {
     font-size: 16px;
     padding: 10px 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .background-container {
-    padding: 5px;
-  }
-
-  .event-container {
-    padding: 15px;
-  }
-
-  h2 {
-    font-size: 18px;
-  }
-
-  label {
-    font-size: 13px;
-  }
-
-  input[type="text"],
-  input[type="date"],
-  input[type="time"],
-  input[type="number"],
-  textarea,
-  select {
-    font-size: 13px;
-    padding: 6px;
-  }
-
-  .drag-drop-area {
-    padding: 10px;
-  }
-
-  .drag-drop-area p {
-    font-size: 13px;
-  }
-
-  button {
-    font-size: 14px;
-    padding: 8px 12px;
   }
 }

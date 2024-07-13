@@ -1,73 +1,79 @@
-<app-navbar></app-navbar>
 <div class="background-container">
   <div class="auth-container">
     <h2>Register</h2>
     <form (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label for="firstName">First Name:</label>
+        <label for="firstName">First Name</label>
         <input type="text" id="firstName" [(ngModel)]="firstName" name="firstName" required>
       </div>
+
       <div class="form-group">
-        <label for="lastName">Last Name:</label>
+        <label for="lastName">Last Name</label>
         <input type="text" id="lastName" [(ngModel)]="lastName" name="lastName" required>
       </div>
+
       <div class="form-group">
-        <label for="email">Email:</label>
+        <label for="email">Email</label>
         <input type="email" id="email" [(ngModel)]="email" name="email" required>
       </div>
+
       <div class="form-group">
-        <label for="username">Username:</label>
+        <label for="username">Username</label>
         <input type="text" id="username" [(ngModel)]="username" name="username" required>
       </div>
+
       <div class="form-group">
-        <label for="password">Password:</label>
+        <label for="password">Password</label>
         <input type="password" id="password" [(ngModel)]="password" name="password" required>
       </div>
+
       <div class="form-group">
-        <label for="confirmPassword">Confirm Password:</label>
+        <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" required>
       </div>
+
       <div class="form-group">
-        <label for="dob">Date of Birth:</label>
-        <input type="date" id="dob" [(ngModel)]="dob" name="dob" required>
+        <label for="dateOfBirth">Date of Birth</label>
+        <input type="date" id="dateOfBirth" [(ngModel)]="dateOfBirth" name="dateOfBirth" required>
       </div>
+
       <div class="form-group">
-        <label for="gender">Gender:</label>
-        <select id="gender" [(ngModel)]="gender" name="gender" required>
-          <option value="">Select Gender</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="state">State:</label>
+        <label for="state">State</label>
         <input type="text" id="state" [(ngModel)]="state" name="state" required>
       </div>
+
       <div class="form-group">
-        <label for="city">City:</label>
-        <input type="text" id="city" [(ngModel)]="city" name="city" required>
+        <label for="zipcode">Zip Code</label>
+        <input type="text" id="zipcode" [(ngModel)]="zipcode" name="zipcode" required>
       </div>
+
       <div class="form-group">
-        <label for="communicationPreference">Preferred Communication Method:</label>
-        <select id="communicationPreference" [(ngModel)]="communicationPreference" name="communicationPreference" required>
-          <option value="">Select Preference</option>
-          <option value="email">Email</option>
-          <option value="sms">SMS</option>
-          <option value="app">App Notification</option>
-        </select>
+        <label for="profilePicture">Profile Picture (Optional)</label>
+        <div class="drag-drop-area"
+             (dragover)="onDragOver($event)"
+             (dragleave)="onDragLeave($event)"
+             (drop)="onDrop($event)"
+             (click)="fileInput.click()">
+          <p>Drag and drop an image here, or click to select</p>
+          <p *ngIf="profilePictureName">Selected: {{ profilePictureName }}</p>
+        </div>
+        <input type="file"
+               #fileInput
+               style="display: none"
+               (change)="onFileSelected($event)"
+               accept="image/*">
       </div>
+
       <button type="submit" class="btn-primary">Register</button>
+
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>
+      <div *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+      </div>
     </form>
-    <div class="social-login">
-      <button class="btn-github">
-        <i class="fab fa-github"></i> Register with GitHub
-      </button>
-      <button class="btn-google">
-        <i class="fab fa-google"></i> Register with Google
-      </button>
-    </div>
-    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
-    <p>Already have an account? <a routerLink="/login">Login</a></p>
+
+    <p>Already have an account? <a [routerLink]="['/login']">Login</a></p>
   </div>
 </div>

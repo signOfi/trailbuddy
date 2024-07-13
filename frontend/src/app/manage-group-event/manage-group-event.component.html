@@ -56,16 +56,17 @@
         </div>
 
         <div class="form-group">
-          <label><i class="far fa-image"></i> Event Image</label>
+          <label>Event Image</label>
           <div class="drag-drop-area"
                (dragover)="onDragOver($event)"
                (dragleave)="onDragLeave($event)"
                (drop)="onDrop($event)"
                (click)="fileInput.click()">
+            <i class="fas fa-cloud-upload-alt"></i>
             <p>Drag and drop an image here, or click to select</p>
-            <p *ngIf="event.imageName">{{ event.imageName }}</p>
+            <p *ngIf="event.imageName" class="file-name">Selected: {{ event.imageName }}</p>
           </div>
-          <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none;">
+          <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)" accept="image/*">
         </div>
 
         <button type="submit">Save Changes</button>

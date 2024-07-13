@@ -1,0 +1,41 @@
+<div class="my-events-container">
+  <h1>My Events</h1>
+
+  <div class="events-layout">
+    <div class="event-list">
+      <ul>
+        <li *ngFor="let event of events"
+            (click)="selectEvent(event)"
+            [class.selected]="event === selectedEvent">
+          <h3>{{ event.title }}</h3>
+          <p>{{ event.date | date:'shortDate' }}</p>
+          <span class="difficulty" [ngClass]="event.difficulty.toLowerCase()">
+            {{ event.difficulty }}
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="event-details" *ngIf="selectedEvent">
+      <div class="image-container">
+        <img [src]="getEventImage(selectedEvent)" alt="{{ selectedEvent.title }}" class="event-image">
+      </div>
+
+      <h2>{{ selectedEvent.title }}</h2>
+
+      <div class="details">
+        <p><strong>Date:</strong> {{ selectedEvent.date | date:'fullDate' }}</p>
+        <p><strong>Time:</strong> {{ selectedEvent.time }}</p>
+        <p><strong>Location:</strong> {{ selectedEvent.location }}</p>
+        <p><strong>Description:</strong> {{ selectedEvent.description }}</p>
+        <p><strong>Difficulty:</strong> {{ selectedEvent.difficulty }}</p>
+        <p><strong>Event Leader:</strong> {{ selectedEvent.leader }}</p>
+        <p><strong>Spots Left:</strong> {{ selectedEvent.spotsLeft }}</p>
+      </div>
+
+      <div class="actions">
+        <button class="leave-button" (click)="confirmLeaveEvent()">Leave Event</button>
+      </div>
+    </div>
+  </div>
+</div>
