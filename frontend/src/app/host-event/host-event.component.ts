@@ -35,6 +35,8 @@ export class HostEventComponent implements AfterViewInit {
     imageName: ''
   };
 
+  isSubmitting = false;
+
   constructor(
     private eventService: EventService,
     private router: Router
@@ -118,47 +120,76 @@ export class HostEventComponent implements AfterViewInit {
   }
 
   onSubmit() {
-    const eventData: Partial<EventDTO> = {
-      title: this.event.title,
-      date: new Date(`${this.event.date}T${this.event.time}`),
-      location: this.event.location,
-      description: this.event.description,
-      difficulty: this.event.difficulty,
-      spots: this.event.spots,
-      eventImageUrl: this.event.eventImageUrl,
-      participants: []
-    };
+    if (this.isFormValid() && !this.isSubmitting) {
+      this.isSubmitting = true;
 
-    this.eventService.createEvent(eventData).subscribe({
-      next: (createdEvent) => {
-        console.log('Event created successfully:', createdEvent);
+      const eventData: Partial<EventDTO> = {
+        title: this.event.title,
+        date: new Date(`${this.event.date}T${this.event.time}`),
+        location: this.event.location,
+        description: this.event.description,
+        difficulty: this.event.difficulty,
+        spots: this.event.spots,
+        eventImageUrl: this.event.eventImageUrl,
+        participants: []
+      };
 
-        if (this.event.image) {
-          this.eventService.uploadEventImage(createdEvent.id, this.event.image).subscribe({
-            next: (imageUrl) => {
-              console.log('Image uploaded successfully:', imageUrl);
-              createdEvent.eventImageUrl = imageUrl;
-              this.eventService.updateEvent(createdEvent.id, createdEvent).subscribe({
-                next: () => console.log('Event updated with image URL'),
-                error: (error) => console.error('Error updating event with image URL:', error)
-              });
-            },
-            error: (error) => console.error('Error uploading image:', error)
-          });
+      this.eventService.createEvent(eventData).subscribe({
+        next: (createdEvent) => {
+          console.log('Event created successfully:', createdEvent);
+
+          if (this.event.image) {
+            this.eventService.uploadEventImage(createdEvent.id, this.event.image).subscribe({
+              next: (imageUrl) => {
+                console.log('Image uploaded successfully:', imageUrl);
+                createdEvent.eventImageUrl = imageUrl;
+                this.eventService.updateEvent(createdEvent.id, createdEvent).subscribe({
+                  next: () => {
+                    console.log('Event updated with image URL');
+                    this.navigateToHomepage();
+                  },
+                  error: (error) => {
+                    console.error('Error updating event with image URL:', error);
+                    this.navigateToHomepage();
+                  }
+                });
+              },
+              error: (error) => {
+                console.error('Error uploading image:', error);
+                this.navigateToHomepage();
+              }
+            });
+          } else {
+            this.navigateToHomepage();
+          }
+        },
+        error: (error) => {
+          console.error('Error creating event:', error);
+          this.isSubmitting = false;
+          // Handle error (e.g., show error message to user)
         }
+      });
+    }
+  }
 
-        this.router.navigate(['/events', createdEvent.id]);
-      },
-      error: (error) => {
-        console.error('Error creating event:', error);
-        if (error.status === 403) {
-          console.error('Access denied. Make sure you are logged in and have the necessary permissions.');
-        } else if (error.status === 404) {
-          console.error('Endpoint not found. Check your API URL and controller mappings.');
-        } else if (error.status === 405) {
-          console.error('Method not allowed. Ensure your backend supports POST requests for this endpoint.');
-        }
-      }
-    });
+  private navigateToHomepage() {
+    this.isSubmitting = false;
+    console.log('Attempting to navigate to homepage');
+    this.router.navigate(['/'])
+      .then(() => console.log('Navigation to homepage successful'))
+      .catch(error => console.error('Error navigating to homepage:', error));
+  }
+
+  isFormValid(): boolean {
+    return !!(
+      this.event.title &&
+      this.event.date &&
+      this.event.time &&
+      this.event.location &&
+      this.event.description &&
+      this.event.difficulty &&
+      this.event.spots &&
+      this.event.image
+    );
   }
 }

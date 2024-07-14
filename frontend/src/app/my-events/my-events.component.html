@@ -1,45 +1,49 @@
-<div class="my-events-container">
-  <h1>My Events</h1>
-
-  <div class="events-layout">
-    <div class="event-list">
-      <h2>Hosted Events</h2>
-      <ul>
-        <li *ngFor="let event of hostedEvents" (click)="selectEvent(event)" [class.selected]="selectedEvent === event">
-          <h3>{{ event.title }}</h3>
-          <p>{{ event.date | date:'shortDate' }}</p>
-          <span class="difficulty" [ngClass]="event.difficulty.toLowerCase()">{{ event.difficulty }}</span>
-        </li>
-      </ul>
-
-      <h2>Participated Events</h2>
-      <ul>
-        <li *ngFor="let event of participatedEvents" (click)="selectEvent(event)" [class.selected]="selectedEvent === event">
-          <h3>{{ event.title }}</h3>
-          <p>{{ event.date | date:'shortDate' }}</p>
-          <span class="difficulty" [ngClass]="event.difficulty.toLowerCase()">{{ event.difficulty }}</span>
-        </li>
-      </ul>
+<div class="background-container">
+  <div class="content-wrapper">
+    <div class="event-list-panel">
+      <div class="scrollable-container">
+        <div class="event-section">
+          <h3>Hosted Events</h3>
+          <ul class="event-list">
+            <li *ngFor="let event of hostedEvents" (click)="selectEvent(event)" [class.selected]="selectedEvent === event">
+              <h4>{{ event.title }}</h4>
+              <p>{{ event.date | date:'MMM d, y' }}</p>
+              <span class="difficulty" [ngClass]="event.difficulty.toLowerCase()">
+                {{ event.difficulty }}
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="event-section">
+          <h3>Participated Events</h3>
+          <ul class="event-list">
+            <li *ngFor="let event of participatedEvents" (click)="selectEvent(event)" [class.selected]="selectedEvent === event">
+              <h4>{{ event.title }}</h4>
+              <p>{{ event.date | date:'MMM d, y' }}</p>
+              <span class="difficulty" [ngClass]="event.difficulty.toLowerCase()">
+                {{ event.difficulty }}
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <div class="event-details" *ngIf="selectedEvent">
       <div class="image-container">
-        <img [src]="getEventImage(selectedEvent)" alt="{{ selectedEvent.title }}" class="event-image">
+        <img [src]="selectedEvent.eventImageUrl || 'assets/trail/defaultTrail1.png'" alt="Event Image" class="event-image">
       </div>
-
       <h2>{{ selectedEvent.title }}</h2>
-
       <div class="details">
-        <p><strong>Date:</strong> {{ selectedEvent.date | date:'fullDate' }}</p>
+        <p><strong>Date:</strong> {{ selectedEvent.date | date:'EEEE, MMMM d, y' }}</p>
         <p><strong>Location:</strong> {{ selectedEvent.location }}</p>
         <p><strong>Description:</strong> {{ selectedEvent.description }}</p>
-        <p><strong>Difficulty:</strong> {{ selectedEvent.difficulty }}</p>
-        <p><strong>Event Leader:</strong> {{ selectedEvent.host.firstName }} {{ selectedEvent.host.lastName }}</p>
-        <p><strong>Spots Left:</strong> {{ selectedEvent.spots - selectedEvent.participants.length }}</p>
+        <p><strong>Difficulty:</strong> <span class="difficulty" [ngClass]="selectedEvent.difficulty.toLowerCase()">{{ selectedEvent.difficulty }}</span></p>
+        <p><strong>Spots Left:</strong> {{ selectedEvent.spots }}</p>
       </div>
-
-      <div class="actions" *ngIf="participatedEvents.includes(selectedEvent)">
-        <button class="leave-button" (click)="confirmLeaveEvent()">Leave Event</button>
+      <div class="actions">
+        <button *ngIf="isHostedEvent(selectedEvent)" class="delete-button" (click)="deleteEvent()">Delete Event</button>
+        <button *ngIf="isParticipatedEvent(selectedEvent)" class="leave-button" (click)="leaveEvent()">Leave Event</button>
       </div>
     </div>
   </div>

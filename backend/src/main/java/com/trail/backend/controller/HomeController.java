@@ -10,7 +10,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home() {
-        return "Trail Buddy Default Home Page.";
+        return "Trail Buddy Default Home Page.1111";
     }
 
 }

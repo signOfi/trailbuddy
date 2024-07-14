@@ -1,36 +1,37 @@
 <div class="background-container">
   <div class="event-container">
     <h2>Create a Trail Event</h2>
-    <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()" #eventForm="ngForm">
       <div class="form-group">
         <label for="title">Event Title</label>
-        <input type="text" id="title" [(ngModel)]="event.title" name="title" required>
+        <input type="text" id="title" name="title" [(ngModel)]="event.title" required>
       </div>
 
       <div class="form-row">
         <div class="form-group half-width">
           <label for="date">Date</label>
-          <input type="date" id="date" [(ngModel)]="event.date" name="date" required>
+          <input type="date" id="date" name="date" [(ngModel)]="event.date" required>
         </div>
+
         <div class="form-group half-width">
           <label for="time">Time</label>
-          <input type="time" id="time" [(ngModel)]="event.time" name="time" required>
+          <input type="time" id="time" name="time" [(ngModel)]="event.time" required>
         </div>
       </div>
 
       <div class="form-group">
         <label for="location">Location</label>
-        <input type="text" id="location" [(ngModel)]="event.location" name="location" #addressInput required>
+        <input type="text" id="location" name="location" [(ngModel)]="event.location" #addressInput required>
       </div>
 
       <div class="form-group">
         <label for="description">Description</label>
-        <textarea id="description" [(ngModel)]="event.description" name="description" required></textarea>
+        <textarea id="description" name="description" [(ngModel)]="event.description" required></textarea>
       </div>
 
       <div class="form-group">
         <label for="difficulty">Difficulty</label>
-        <select id="difficulty" [(ngModel)]="event.difficulty" name="difficulty" required>
+        <select id="difficulty" name="difficulty" [(ngModel)]="event.difficulty" required>
           <option value="EASY">Easy</option>
           <option value="MODERATE">Moderate</option>
           <option value="CHALLENGING">Challenging</option>
@@ -39,11 +40,11 @@
 
       <div class="form-group">
         <label for="spots">Available Spots</label>
-        <input type="number" id="spots" [(ngModel)]="event.spots" name="spots" required>
+        <input type="number" id="spots" name="spots" [(ngModel)]="event.spots" required min="1">
       </div>
 
       <div class="form-group">
-        <label for="eventImage">Event Image</label>
+        <label for="image">Event Image</label>
         <div class="drag-drop-area"
              (dragover)="onDragOver($event)"
              (dragleave)="onDragLeave($event)"
@@ -53,14 +54,16 @@
           <p *ngIf="event.imageName">Selected: {{ event.imageName }}</p>
         </div>
         <input type="file"
-               id="eventImage"
                #fileInput
-               style="display:none;"
+               style="display: none"
                (change)="onFileSelected($event)"
-               accept="image/*">
+               accept="image/*"
+               required>
       </div>
 
-      <button type="submit">Create Event</button>
+      <button type="submit" [disabled]="!isFormValid() || isSubmitting">
+        {{ isSubmitting ? 'Creating Event...' : 'Create Event' }}
+      </button>
     </form>
   </div>
 </div>

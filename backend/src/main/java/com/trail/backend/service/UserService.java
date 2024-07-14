@@ -36,16 +36,7 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public User registerNewAccount(String firstName,
-                                   String lastName,
-                                   String email,
-                                   String username,
-                                   String password,
-                                   String dateOfBirth,
-                                   String state,
-                                   String zipcode,
-                                   String profilePictureUrl) {
-
+    public User registerNewAccount(String firstName, String lastName, String email, String username, String password, String dateOfBirth, String state, String zipcode, String profilePictureUrl) {
         if (userRepository.findByUsername(username) != null)
             throw new RuntimeException("Username already exists");
 

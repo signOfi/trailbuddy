@@ -61,11 +61,10 @@ export class EventService {
   }
 
   getUserHostedEvents(): Observable<EventDTO[]> {
-    return this.http.get<EventDTO[]>(`${this.apiUrl}/api/users/user/hosted-events`, { headers: this.getHeaders() });
+    return this.http.get<EventDTO[]>(`${this.apiUrl}/events/hosted`, { headers: this.getHeaders() });
   }
 
   getUserParticipatedEvents(): Observable<EventDTO[]> {
-    return this.http.get<EventDTO[]>(`${this.apiUrl}/api/users/user/participated-events`, { headers: this.getHeaders() });
+    return this.http.get<EventDTO[]>(`${this.apiUrl}/events/participated`, { headers: this.getHeaders() });
   }
-
 }

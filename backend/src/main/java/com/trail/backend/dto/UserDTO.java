@@ -2,10 +2,15 @@ package com.trail.backend.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
+import java.util.List;
+
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDTO {
+    private Long id;
     private String firstName;
     private String lastName;
     private String email;
@@ -15,4 +20,6 @@ public class UserDTO {
     private String state;
     private String zipcode;
     private String profilePictureUrl;
+    private List<Long> hostedEventIds;
+    private List<Long> participatedEventIds;
 }

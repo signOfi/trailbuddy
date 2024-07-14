@@ -37,8 +37,10 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/register", "/login", "/error", "/events").permitAll()
+                        .requestMatchers("/register", "/login", "/error", "/events", "/manage-group").permitAll()
+                        .requestMatchers("/api/users/user/**").authenticated()
                         .requestMatchers(HttpMethod.POST, "/events").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/events/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(new JwtAuthenticationEntryPoint()))

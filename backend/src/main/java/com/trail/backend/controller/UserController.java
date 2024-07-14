@@ -8,8 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import com.trail.backend.model.Event;
 
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 @RestController
 public class UserController {
@@ -71,15 +73,18 @@ public class UserController {
 
     private UserDTO convertToDto(User user) {
         return new UserDTO(
+                user.getId(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
                 user.getUsername(),
-                user.getPassword(),
+                null,
                 user.getDateOfBirth(),
                 user.getState(),
                 user.getZipcode(),
-                user.getProfilePictureUrl()
+                user.getProfilePictureUrl(),
+                user.getHostedEvents().stream().map(Event::getId).collect(Collectors.toList()),
+                user.getParticipatedEvents().stream().map(Event::getId).collect(Collectors.toList())
         );
     }
 }

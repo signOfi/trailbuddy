@@ -4,12 +4,14 @@ import com.trail.backend.model.Difficulty;
 import com.trail.backend.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class EventDTO {
     private long id;
     private String title;
@@ -17,8 +19,9 @@ public class EventDTO {
     private String location;
     private String description;
     private Difficulty difficulty;
-    private User host;
+    private Long hostId;
+    private String hostName;
     private int spots;
     private String eventImageUrl;
-    private List<User> participants;
+    private List<Long> participantIds;
 }

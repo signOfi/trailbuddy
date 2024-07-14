@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NavbarComponent } from "../navbar/navbar.component";
 import { EventService } from '../services/event.service';
 import { EventDTO } from '../model/EventDTO';
 
 @Component({
   selector: 'app-my-events',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NavbarComponent],
   templateUrl: './my-events.component.html',
   styleUrls: ['./my-events.component.css']
 })
@@ -17,58 +18,80 @@ export class MyEventsComponent implements OnInit {
 
   constructor(private eventService: EventService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.loadHostedEvents();
     this.loadParticipatedEvents();
   }
 
-  loadHostedEvents(): void {
+  loadHostedEvents() {
     this.eventService.getUserHostedEvents().subscribe(
-      events => {
+      (events) => {
         this.hostedEvents = events;
-        if (this.hostedEvents.length > 0 && !this.selectedEvent) {
-          this.selectedEvent = this.hostedEvents[0];
+        if (events.length > 0 && !this.selectedEvent) {
+          this.selectEvent(events[0]);
         }
       },
-      error => console.error('Error loading hosted events:', error)
+      (error) => {
+        console.error('Error loading hosted events:', error);
+      }
     );
   }
 
-  loadParticipatedEvents(): void {
+  loadParticipatedEvents() {
     this.eventService.getUserParticipatedEvents().subscribe(
-      events => {
+      (events) => {
         this.participatedEvents = events;
-        if (this.participatedEvents.length > 0 && !this.selectedEvent) {
-          this.selectedEvent = this.participatedEvents[0];
+        if (events.length > 0 && !this.selectedEvent && this.hostedEvents.length === 0) {
+          this.selectEvent(events[0]);
         }
       },
-      error => console.error('Error loading participated events:', error)
+      (error) => {
+        console.error('Error loading participated events:', error);
+      }
     );
   }
 
-  selectEvent(event: EventDTO): void {
+  selectEvent(event: EventDTO) {
     this.selectedEvent = event;
   }
 
-  confirmLeaveEvent(): void {
-    if (confirm('Are you sure you want to leave this event?')) {
-      this.leaveEvent();
+  deleteEvent() {
+    if (this.selectedEvent && this.isHostedEvent(this.selectedEvent)) {
+      if (confirm('Are you sure you want to delete this event?')) {
+        this.eventService.cancelEvent(this.selectedEvent.id).subscribe(
+          () => {
+            this.loadHostedEvents();
+            this.selectedEvent = null;
+          },
+          (error) => {
+            console.error('Error deleting event:', error);
+          }
+        );
+      }
     }
   }
 
-  leaveEvent(): void {
-    if (this.selectedEvent) {
-      this.eventService.leaveEvent(this.selectedEvent.id).subscribe(
-        () => {
-          this.participatedEvents = this.participatedEvents.filter(e => e.id !== this.selectedEvent?.id);
-          this.selectedEvent = this.participatedEvents.length > 0 ? this.participatedEvents[0] : null;
-        },
-        error => console.error('Error leaving event:', error)
-      );
+  leaveEvent() {
+    if (this.selectedEvent && this.isParticipatedEvent(this.selectedEvent)) {
+      if (confirm('Are you sure you want to leave this event?')) {
+        this.eventService.leaveEvent(this.selectedEvent.id).subscribe(
+          () => {
+            this.loadParticipatedEvents();
+            this.selectedEvent = null;
+          },
+          (error) => {
+            console.error('Error leaving event:', error);
+          }
+        );
+      }
     }
   }
 
-  getEventImage(event: EventDTO): string {
-    return event.eventImageUrl || 'assets/trails/default-event-image.png';
+  isHostedEvent(event: EventDTO): boolean {
+    return this.hostedEvents.some(e => e.id === event.id);
+  }
+
+  isParticipatedEvent(event: EventDTO): boolean {
+    return this.participatedEvents.some(e => e.id === event.id);
   }
 }
