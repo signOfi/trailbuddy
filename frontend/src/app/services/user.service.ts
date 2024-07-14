@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
-import { BehaviorSubject, Observable, tap } from "rxjs";
+import {BehaviorSubject, catchError, Observable, tap, throwError} from "rxjs";
 import { UserDTO } from '../model/UserDTO';
 import { Router } from '@angular/router';
 
@@ -27,6 +27,10 @@ export class UserService {
           localStorage.setItem('token', response.token);
           this.isLoggedInSubject.next(true);
         }
+      }),
+      catchError(error => {
+        console.error('Login error:', error);
+        return throwError(() => new Error(error.message || 'Login failed'));
       })
     );
   }

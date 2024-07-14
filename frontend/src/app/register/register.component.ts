@@ -32,55 +32,114 @@ export class RegisterComponent {
   successMessage: string = '';
   profilePicture: File | null = null;
   profilePictureName: string = '';
+  formErrors: { [key: string]: string } = {};
 
   constructor(private userService: UserService, private router: Router) {}
 
   onSubmit() {
-    if (!this.validateForm()) {
-      return;
+    if (this.validateForm()) {
+      const userData: UserDTO = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        username: this.username,
+        password: this.password,
+        dateOfBirth: this.dateOfBirth,
+        state: this.state,
+        zipcode: this.zipcode,
+        profilePictureUrl: null
+      };
+
+      this.userService.register(userData).subscribe(
+        response => {
+          console.log("Register Success", response);
+          this.successMessage = "Registration successful! Redirecting to home page...";
+          this.errorMessage = '';
+          setTimeout(() => {
+            this.router.navigate(['/']);
+          }, 2000);
+        },
+        error => {
+          console.error("Register failed", error);
+          this.errorMessage = "Registration failed. Please try again";
+          this.successMessage = '';
+        }
+      );
     }
-
-    const userData: UserDTO = {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      email: this.email,
-      username: this.username,
-      password: this.password,
-      dateOfBirth: this.dateOfBirth,
-      state: this.state,
-      zipcode: this.zipcode,
-      profilePictureUrl: null
-    };
-
-    this.userService.register(userData).subscribe(
-      response => {
-        console.log("Register Success", response);
-        this.successMessage = "Registration successful! Redirecting to home page...";
-        this.errorMessage = '';
-        setTimeout(() => {
-          this.router.navigate(['/']);
-        }, 2000); // Redirect after 2 seconds
-      },
-      error => {
-        console.error("Register failed", error);
-        this.errorMessage = "Registration failed. Please try again";
-        this.successMessage = '';
-      }
-    );
   }
 
   validateForm(): boolean {
-    if (!this.firstName || !this.lastName || !this.email || !this.username ||
-      !this.password || !this.confirmPassword || !this.dateOfBirth ||
-      !this.state || !this.zipcode) {
-      this.errorMessage = "Please fill in all required fields.";
-      return false;
+    this.formErrors = {};
+    let isValid = true;
+
+    if (!this.firstName) {
+      this.formErrors['firstName'] = "First name is required.";
+      isValid = false;
     }
-    if (this.password !== this.confirmPassword) {
-      this.errorMessage = "Passwords do not match";
-      return false;
+
+    if (!this.lastName) {
+      this.formErrors['lastName'] = "Last name is required.";
+      isValid = false;
     }
-    return true;
+
+    if (!this.email) {
+      this.formErrors['email'] = "Email is required.";
+      isValid = false;
+    } else if (!this.isValidEmail(this.email)) {
+      this.formErrors['email'] = "Please enter a valid email address.";
+      isValid = false;
+    }
+
+    if (!this.username) {
+      this.formErrors['username'] = "Username is required.";
+      isValid = false;
+    }
+
+    if (!this.password) {
+      this.formErrors['password'] = "Password is required.";
+      isValid = false;
+    } else if (this.password.length < 8) {
+      this.formErrors['password'] = "Password must be at least 8 characters long.";
+      isValid = false;
+    }
+
+    if (!this.confirmPassword) {
+      this.formErrors['confirmPassword'] = "Please confirm your password.";
+      isValid = false;
+    } else if (this.password !== this.confirmPassword) {
+      this.formErrors['confirmPassword'] = "Passwords do not match.";
+      isValid = false;
+    }
+
+    if (!this.dateOfBirth) {
+      this.formErrors['dateOfBirth'] = "Date of birth is required.";
+      isValid = false;
+    }
+
+    if (!this.state) {
+      this.formErrors['state'] = "State is required.";
+      isValid = false;
+    }
+
+    if (!this.zipcode) {
+      this.formErrors['zipcode'] = "Zip code is required.";
+      isValid = false;
+    } else if (!this.isValidZipcode(this.zipcode)) {
+      this.formErrors['zipcode'] = "Please enter a valid zip code.";
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
+  isValidEmail(email: string): boolean {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  }
+
+  isValidZipcode(zipcode: string): boolean {
+    const zipcodeRegex = /^\d{5}(-\d{4})?$/;
+    return zipcodeRegex.test(zipcode);
   }
 
   onDragOver(event: DragEvent) {

@@ -5,50 +5,59 @@
       <div class="form-group">
         <label for="firstName">First Name</label>
         <input type="text" id="firstName" [(ngModel)]="firstName" name="firstName" required>
+        <div class="error-message" *ngIf="formErrors['firstName']">{{ formErrors['firstName'] }}</div>
       </div>
 
       <div class="form-group">
         <label for="lastName">Last Name</label>
         <input type="text" id="lastName" [(ngModel)]="lastName" name="lastName" required>
+        <div class="error-message" *ngIf="formErrors['lastName']">{{ formErrors['lastName'] }}</div>
       </div>
 
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" id="email" [(ngModel)]="email" name="email" required>
+        <div class="error-message" *ngIf="formErrors['email']">{{ formErrors['email'] }}</div>
       </div>
 
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" id="username" [(ngModel)]="username" name="username" required>
+        <div class="error-message" *ngIf="formErrors['username']">{{ formErrors['username'] }}</div>
       </div>
 
       <div class="form-group">
         <label for="password">Password</label>
         <input type="password" id="password" [(ngModel)]="password" name="password" required>
+        <div class="error-message" *ngIf="formErrors['password']">{{ formErrors['password'] }}</div>
       </div>
 
       <div class="form-group">
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+        <div class="error-message" *ngIf="formErrors['confirmPassword']">{{ formErrors['confirmPassword'] }}</div>
       </div>
 
       <div class="form-group">
         <label for="dateOfBirth">Date of Birth</label>
         <input type="date" id="dateOfBirth" [(ngModel)]="dateOfBirth" name="dateOfBirth" required>
+        <div class="error-message" *ngIf="formErrors['dateOfBirth']">{{ formErrors['dateOfBirth'] }}</div>
       </div>
 
       <div class="form-group">
         <label for="state">State</label>
         <input type="text" id="state" [(ngModel)]="state" name="state" required>
+        <div class="error-message" *ngIf="formErrors['state']">{{ formErrors['state'] }}</div>
       </div>
 
       <div class="form-group">
         <label for="zipcode">Zip Code</label>
         <input type="text" id="zipcode" [(ngModel)]="zipcode" name="zipcode" required>
+        <div class="error-message" *ngIf="formErrors['zipcode']">{{ formErrors['zipcode'] }}</div>
       </div>
 
       <div class="form-group">
-        <label for="profilePicture">Profile Picture (Optional)</label>
+        <label>Profile Picture (Optional)</label>
         <div class="drag-drop-area"
              (dragover)="onDragOver($event)"
              (dragleave)="onDragLeave($event)"
@@ -57,22 +66,14 @@
           <p>Drag and drop an image here, or click to select</p>
           <p *ngIf="profilePictureName">Selected: {{ profilePictureName }}</p>
         </div>
-        <input type="file"
-               #fileInput
-               style="display: none"
-               (change)="onFileSelected($event)"
-               accept="image/*">
+        <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none;">
       </div>
 
       <button type="submit" class="btn-primary">Register</button>
-
-      <div *ngIf="errorMessage" class="error-message">
-        {{ errorMessage }}
-      </div>
-      <div *ngIf="successMessage" class="success-message">
-        {{ successMessage }}
-      </div>
     </form>
+
+    <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+    <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
 
     <p>Already have an account? <a [routerLink]="['/login']">Login</a></p>
   </div>

@@ -3,6 +3,10 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { environment } from '../../environments/environment';
+import { EventService } from '../services/event.service';
+import { Router } from '@angular/router';
+import { EventDTO } from '../model/EventDTO';
+import { Difficulty } from '../model/Difficulty';
 
 @Component({
   selector: 'app-create-event',
@@ -14,18 +18,27 @@ import { environment } from '../../environments/environment';
 export class HostEventComponent implements AfterViewInit {
   @ViewChild('addressInput') addressInput!: ElementRef;
 
-  event = {
+  event: Partial<EventDTO> & {
+    time: string;
+    image: File | null;
+    imageName: string;
+  } = {
     title: '',
-    date: '',
+    date: new Date(),
     time: '',
     location: '',
     description: '',
-    difficulty: '',
-    leaderName: '',
+    difficulty: Difficulty.EASY,
     spots: 1,
-    image: null as File | null,
+    eventImageUrl: '',
+    image: null,
     imageName: ''
   };
+
+  constructor(
+    private eventService: EventService,
+    private router: Router
+  ) { }
 
   ngAfterViewInit() {
     this.loadGoogleMapsAPI().then(() => {
@@ -105,7 +118,47 @@ export class HostEventComponent implements AfterViewInit {
   }
 
   onSubmit() {
-    console.log('Event submitted:', this.event);
-    // Add your submission logic here, including handling the image file
+    const eventData: Partial<EventDTO> = {
+      title: this.event.title,
+      date: new Date(`${this.event.date}T${this.event.time}`),
+      location: this.event.location,
+      description: this.event.description,
+      difficulty: this.event.difficulty,
+      spots: this.event.spots,
+      eventImageUrl: this.event.eventImageUrl,
+      participants: []
+    };
+
+    this.eventService.createEvent(eventData).subscribe({
+      next: (createdEvent) => {
+        console.log('Event created successfully:', createdEvent);
+
+        if (this.event.image) {
+          this.eventService.uploadEventImage(createdEvent.id, this.event.image).subscribe({
+            next: (imageUrl) => {
+              console.log('Image uploaded successfully:', imageUrl);
+              createdEvent.eventImageUrl = imageUrl;
+              this.eventService.updateEvent(createdEvent.id, createdEvent).subscribe({
+                next: () => console.log('Event updated with image URL'),
+                error: (error) => console.error('Error updating event with image URL:', error)
+              });
+            },
+            error: (error) => console.error('Error uploading image:', error)
+          });
+        }
+
+        this.router.navigate(['/events', createdEvent.id]);
+      },
+      error: (error) => {
+        console.error('Error creating event:', error);
+        if (error.status === 403) {
+          console.error('Access denied. Make sure you are logged in and have the necessary permissions.');
+        } else if (error.status === 404) {
+          console.error('Endpoint not found. Check your API URL and controller mappings.');
+        } else if (error.status === 405) {
+          console.error('Method not allowed. Ensure your backend supports POST requests for this endpoint.');
+        }
+      }
+    });
   }
 }

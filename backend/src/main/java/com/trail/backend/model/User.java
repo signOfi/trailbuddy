@@ -2,6 +2,7 @@ package com.trail.backend.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -38,4 +39,10 @@ public class User {
 
     @Column(nullable = false)
     private String profilePictureUrl;
+
+    @OneToMany(mappedBy = "host")
+    private List<Event> hostedEvents;
+
+    @ManyToMany(mappedBy = "participants")
+    private List<Event> participatedEvents;
 }

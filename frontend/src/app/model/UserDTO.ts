@@ -3,9 +3,11 @@ export interface UserDTO {
   lastName: string;
   email: string;
   username: string;
-  password: string;
+  password?: string;
   dateOfBirth: string;
   state: string;
   zipcode: string;
   profilePictureUrl: string | null;
+  hostedEventIds?: number[];
+  participatedEventIds?: number[];
 }
