@@ -29,7 +29,6 @@ export class ManageGroupEventComponent implements OnInit {
   selectedEventId: number | null = null;
 
   ngOnInit() {
-    // Load the first event by default
     this.selectEvent(1);
   }
 
@@ -39,8 +38,6 @@ export class ManageGroupEventComponent implements OnInit {
   }
 
   loadEventData(eventId: number) {
-    // TODO: Implement logic to load existing event data based on eventId
-    // For now, we'll use sample data
     if (eventId === 1) {
       this.event = {
         title: 'Sample Event 1',
@@ -113,6 +110,5 @@ export class ManageGroupEventComponent implements OnInit {
 
   onSubmit() {
     console.log('Event changes submitted:', this.event);
-    // TODO: Implement logic to save changes
   }
 }
